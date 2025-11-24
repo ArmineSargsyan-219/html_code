@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPUA Library Café - Smart Campus Hub</title>
+    <link rel="icon" type="image/png" href="Gemini_Generated_Image_cs4x6bcs4x6bcs4x.png">
+    <link rel="apple-touch-icon" href="Gemini_Generated_Image_cs4x6bcs4x6bcs4x.png">
+    <title>NPUA Library Café</title>
+    <style>
+
+      
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3d4a3a;
+            --secondary: #5a6c57;
+            --olive: #7d8f69;
+            --olive-light: #a4b494;
+            --olive-lighter: #c9d4be;
+            --cream: #f5f3ed;
+            --white: #ffffff;
+            --beige: #e8e4d9;
+            --success: #6b8e4e;
+            --danger: #a8756f;
+            --warning: #c9a961;
+            --text-dark: #2d3a2e;
+            --text-light: #6b7a6a;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(to bottom, #f5f3ed, #e8e4d9);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(61, 74, 58, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--olive-lighter);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+            cursor: pointer;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--olive);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--olive);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--olive);
+            font-weight: 600;
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .user-info {
+            display: none;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-info.active {
+            display: flex;
+        }
+
+        .wallet-badge {
+            background: var(--olive);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .cart-badge {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .btn {
+            padding: 0.7rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--olive);
+            color: white;
+            box-shadow: 0 4px 12px rgba(125, 143, 105, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(125, 143, 105, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--olive);
+            border: 2px solid var(--olive);
+        }
+
+        .btn-secondary:hover {
+            background: var(--olive);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .search-bar {
+            max-width: 700px;
+            margin: 2rem auto;
+            display: flex;
+            gap: 1rem;
+            background: white;
+            padding: 0.6rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(61, 74, 58, 0.1);
+            border: 1px solid var(--olive-lighter);
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            font-size: 1rem;
+            outline: none;
+            color: var(--text-dark);
+            background: transparent;
+        }
+
+        .search-bar select {
+            border: none;
+            padding: 0.8rem 1rem;
+            font-size: 0.95rem;
+            outline: none;
+            background: var(--cream);
+            color: var(--secondary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(61, 74, 58, 0.06);
+            border: 1px solid var(--olive-lighter);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 700;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(61, 74, 58, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid var(--olive-lighter);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(61, 74, 58, 0.15);
+            border-color: var(--olive-light);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--olive-light) 0%, var(--olive) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .card-subtitle {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-price {
+            font-size: 1.5rem;
+            color: var(--olive);
+            font-weight: 700;
+            margin-top: 0.8rem;
+        }
+
+        .card-status {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 0.8rem;
+        }
+
+        .status-available {
+            background: #e8f5e0;
+            color: var(--success);
+        }
+
+        .status-borrowed {
+            background: #f5e8e6;
+            color: var(--danger);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.2rem;
+        }
+
+        .btn-small {
+            flex: 1;
+            padding: 0.6rem;
+            font-size: 0.9rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: none;
+            background: var(--cream);
+            font-weight: 600;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            border: 2px solid transparent;
+        }
+
+        .tab:hover {
+            background: var(--beige);
+        }
+
+        .tab.active {
+            background: var(--olive);
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--olive-lighter);
+            box-shadow: 0 2px 12px rgba(61, 74, 58, 0.06);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(61, 74, 58, 0.12);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--olive);
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(61, 74, 58, 0.4);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(61, 74, 58, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border: 2px solid var(--olive-lighter);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--olive);
+        }
+
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(61, 74, 58, 0.2);
+            display: none;
+            align-items: center;
+            gap: 1rem;
+            z-index: 3000;
+            border-left: 4px solid var(--success);
+            min-width: 300px;
+        }
+
+        .notification.show {
+            display: flex;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .seat-map {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 1rem;
+            padding: 2rem;
+            background: var(--cream);
+            border-radius: 12px;
+        }
+
+        .seat {
+            aspect-ratio: 1;
+            background: white;
+            border: 2px solid var(--olive-lighter);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .seat.available:hover {
+            border-color: var(--success);
+            background: #e8f5e0;
+            transform: scale(1.05);
+        }
+
+        .seat.occupied {
+            background: #f5e8e6;
+            border-color: var(--danger);
+            cursor: not-allowed;
+        }
+
+        .seat.reserved {
+            background: #fff9e6;
+            border-color: var(--warning);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem;
+            background: var(--cream);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--olive-lighter);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--olive-lighter);
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .qty-btn {
+            background: var(--olive);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .cart-total {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--olive);
+            text-align: right;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo" onclick="showPage('home')">
+                 NPUA Library Café
+            </div>
+            <ul class="nav-links">
+                <li><a onclick="showPage('home')" class="active">Home</a></li>
+                <li><a onclick="showPage('library')">Library</a></li>
+                <li><a onclick="showPage('cafe')">Café</a></li>
+                <li><a onclick="showPage('reservations')">Reservations</a></li>
+                <li><a onclick="showPage('profile')">My Account</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="user-info" id="userInfo">
+                    <div class="wallet-badge" id="walletDisplay">$0.00</div>
+                    <div class="cart-badge" onclick="openModal('cartModal')">
+                        🛒
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                    <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                </div>
+                <div id="authButtons">
+                    <button class="btn btn-secondary" onclick="openModal('loginModal')">Login</button>
+                    <button class="btn btn-primary" onclick="openModal('registerModal')">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="notification" id="notification">
+        <span id="notificationText"></span>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div class="page active" id="home">
+        <div class="hero">
+            <h1>Welcome to NPUA Library Café</h1>
+            <p>Discover books, enjoy coffee, and connect with your community</p>
+            
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search books, menu items, or events...">
+                <select id="searchCategory">
+                    <option value="all">All</option>
+                    <option value="books">Books</option>
+                    <option value="menu">Menu</option>
+                </select>
+                <button class="btn btn-primary" onclick="performSearch()">Search</button>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="statBooks">0</div>
+                    <div class="stat-label">Books Available</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statMembers">0</div>
+                    <div class="stat-label">Active Members</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statItems">0</div>
+                    <div class="stat-label">Café Items</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statEvents">12</div>
+                    <div class="stat-label">Upcoming Events</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">📚 Trending Books</h2>
+                <div class="cards-grid" id="trendingBooks"></div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">☕ Popular Menu</h2>
+                <div class="cards-grid" id="popularMenu"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIBRARY PAGE -->
+    <div class="page" id="library">
+        <div class="container">
+            <div class="section">
+                <h2 class="section-title">
+                    <span>📚 Library Catalog</span>
+                </h2>
+                
+                <div class="tabs">
+                    <button class="tab active" onclick="filterBooks('all')">All Books</button>
+                    <button class="tab" onclick="filterBooks('Fiction')">Fiction</button>
+                    <button class="tab" onclick="filterBooks('Non-Fiction')">Non-Fiction</button>
+                    <button class="tab" onclick="filterBooks('Technology')">Technology</button>
+                    <button class="tab" onclick="filterBooks('Science')">Science</button>
+                </div>
+
+                <div class="cards-grid" id="libraryBooks"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAFÉ PAGE -->
+    <div class="page" id="cafe">
+        <div class="container">
+            <div class="section">
+                <h2 class="section-title">☕ Café Menu</h2>
+                
+                <div class="tabs">
+                    <button class="tab active" onclick="filterMenu('all')">All Items</button>
+                    <button class="tab" onclick="filterMenu('Hot Drinks')">Hot Drinks</button>
+                    <button class="tab" onclick="filterMenu('Cold Drinks')">Cold Drinks</button>
+                    <button class="tab" onclick="filterMenu('Snacks')">Snacks</button>
+                </div>
+
+                <div class="cards-grid" id="cafeMenu"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESERVATIONS PAGE -->
+    <div class="page" id="reservations">
+        <div class="container">
+            <div class="section">
+                <h2 class="section-title">💺 Seat Reservation</h2>
+                <p style="margin-bottom: 2rem; color: var(--text-light);">Select an available seat to reserve (Click to reserve/unreserve)</p>
+                
+                <div style="display: flex; gap: 2rem; margin-bottom: 2rem;">
+                    <div><span style="display: inline-block; width: 20px; height: 20px; background: white; border: 2px solid var(--olive-lighter); border-radius: 4px; margin-right: 8px;"></span> Available</div>
+                    <div><span style="display: inline-block; width: 20px; height: 20px; background: #f5e8e6; border: 2px solid var(--danger); border-radius: 4px; margin-right: 8px;"></span> Occupied</div>
+                    <div><span style="display: inline-block; width: 20px; height: 20px; background: #fff9e6; border: 2px solid var(--warning); border-radius: 4px; margin-right: 8px;"></span> Your Reservations</div>
+                </div>
+
+                <div class="seat-map" id="seatMap"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFILE PAGE -->
+    <div class="page" id="profile">
+        <div class="container">
+            <div class="section">
+                <h2 class="section-title">👤 My Profile</h2>
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
+                    <div style="text-align: center;">
+                        <div style="width: 150px; height: 150px; background: linear-gradient(135deg, var(--olive-light), var(--olive)); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 4rem; color: white;">👤</div>
+                        <h3 id="profileName" style="color: var(--primary);">Guest</h3>
+                        <p id="profileRole" style="color: var(--text-light);">Not logged in</p>
+                    </div>
+                    <div>
+                        <h3 style="margin-bottom: 1rem; color: var(--primary);">Account Information</h3>
+                        <p style="margin-bottom: 0.5rem;"><strong>Email:</strong> <span id="profileEmail">-</span></p>
+                        <p style="margin-bottom: 0.5rem;"><strong>Member Since:</strong> <span id="profileMemberSince">-</span></p>
+                        <p style="margin-bottom: 0.5rem;"><strong>Wallet Balance:</strong> <span id="profileWallet">$0.00</span></p>
+                        <p style="margin-bottom: 0.5rem;"><strong>Books Borrowed:</strong> <span id="profileBooksBorrowed">0</span></p>
+                        <p style="margin-bottom: 0.5rem;"><strong>Current Fines:</strong> <span id="profileFines">$0.00</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">📖 Borrowing History</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Book</th>
+                            <th>Borrowed</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="borrowingHistory"></tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">🛒 Order History</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Items</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderHistory"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN MODAL -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login</h2>
+                <button class="close-modal" onclick="closeModal('loginModal')">×</button>
+            </div>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- REGISTER MODAL -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Sign Up</h2>
+                <button class="close-modal" onclick="closeModal('registerModal')">×</button>
+            </div>
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="regName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" required>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="regRole" required>
+                        <option value="">Select role</option>
+                        <option value="Student">Student</option>
+                        <option value="Librarian">Librarian</option>
+                        <option value="Café Staff">Café Staff</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CART MODAL -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛒 Your Cart</h2>
+                <button class="close-modal" onclick="closeModal('cartModal')">×</button>
+            </div>
+            <div id="cartItems"></div>
+            <div class="cart-total">Total: $<span id="cartTotalAmount">0.00</span></div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        // DATA STORAGE
+        const bookDatabase = [
+            { id: 1, title: "The Midnight Library", author: "Matt Haig", category: "Fiction", status: "available", icon: "📕" },
+            { id: 2, title: "Atomic Habits", author: "James Clear", category: "Non-Fiction", status: "borrowed", icon: "📘" },
+            { id: 3, title: "Sapiens", author: "Yuval Noah Harari", category: "Non-Fiction", status: "available", icon: "📗" },
+            { id: 4, title: "Clean Code", author: "Robert C. Martin", category: "Technology", status: "available", icon: "📙" },
+            { id: 5, title: "The Pragmatic Programmer", author: "David Thomas", category: "Technology", status: "available", icon: "📕" },
+            { id: 6, title: "Educated", author: "Tara Westover", category: "Non-Fiction", status: "available", icon: "📘" },
+            { id: 7, title: "1984", author: "George Orwell", category: "Fiction", status: "available", icon: "📗" },
+            { id: 8, title: "A Brief History of Time", author: "Stephen Hawking", category: "Science", status: "available", icon: "📙" }
+        ];
+
+        const menuDatabase = [
+            { id: 1, name: "Caramel Macchiato", category: "Hot Drinks", price: 4.50, icon: "☕" },
+            { id: 2, name: "Matcha Latte", category: "Cold Drinks", price: 5.00, icon: "🧋" },
+            { id: 3, name: "Croissant", category: "Snacks", price: 3.00, icon: "🥐" },
+            { id: 4, name: "Blueberry Muffin", category: "Snacks", price: 3.50, icon: "🧁" },
+            { id: 5, name: "Espresso", category: "Hot Drinks", price: 3.00, icon: "☕" },
+            { id: 6, name: "Iced Tea", category: "Cold Drinks", price: 4.00, icon: "🧋" },
+            { id: 7, name: "Cappuccino", category: "Hot Drinks", price: 4.00, icon: "☕" },
+            { id: 8, name: "Smoothie Bowl", category: "Snacks", price: 6.50, icon: "🥗" }
+        ];
+
+        let currentUser = null;
+        let cart = [];
+        let borrowedBooks = [];
+        let reservedSeats = [];
+        let orderHistory = [];
+
+        // INITIALIZE APP
+        window.onload = function() {
+            loadFromStorage();
+            updateStats();
+            renderTrendingBooks();
+            renderPopularMenu();
+            renderLibraryBooks('all');
+            renderCafeMenu('all');
+            generateSeatMap();
+        };
+
+        // LOCAL STORAGE
+        function saveToStorage() {
+            const data = {
+                currentUser,
+                cart,
+                borrowedBooks,
+                reservedSeats,
+                orderHistory
+            };
+            localStorage.setItem('npuaLibraryCafe', JSON.stringify(data));
+        }
+
+        function loadFromStorage() {
+            const saved = localStorage.getItem('npuaLibraryCafe');
+            if (saved) {
+                const data = JSON.parse(saved);
+                currentUser = data.currentUser;
+                cart = data.cart || [];
+                borrowedBooks = data.borrowedBooks || [];
+                reservedSeats = data.reservedSeats || [];
+                orderHistory = data.orderHistory || [];
+                
+                if (currentUser) {
+                    updateUIForLoggedInUser();
+                }
+                updateCartDisplay();
+            }
+        }
+
+        // PAGE NAVIGATION
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (pageId === 'profile') {
+                if (!currentUser) {
+                    showNotification('Please login to view your profile');
+                    showPage('home');
+                    openModal('loginModal');
+                    return;
+                }
+                updateProfilePage();
+            }
+        }
+
+        // AUTHENTICATION
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            currentUser = {
+                name: email.split('@')[0],
+                email: email,
+                role: 'Student',
+                memberSince: new Date().toLocaleDateString(),
+                wallet: 50.00,
+                booksBorrowed: borrowedBooks.length,
+                fines: 0
+            };
+
+            updateUIForLoggedInUser();
+            closeModal('loginModal');
+            showNotification('Login successful! Welcome back!');
+            saveToStorage();
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const role = document.getElementById('regRole').value;
+
+            currentUser = {
+                name: name,
+                email: email,
+                role: role,
+                memberSince: new Date().toLocaleDateString(),
+                wallet: 50.00,
+                booksBorrowed: 0,
+                fines: 0
+            };
+
+            updateUIForLoggedInUser();
+            closeModal('registerModal');
+            showNotification('Registration successful! Welcome to NPUA Library Café!');
+            saveToStorage();
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('userInfo').classList.remove('active');
+            document.getElementById('authButtons').style.display = 'flex';
+            showNotification('Logged out successfully');
+            saveToStorage();
+            showPage('home');
+        }
+
+        function updateUIForLoggedInUser() {
+            document.getElementById('userInfo').classList.add('active');
+            document.getElementById('authButtons').style.display = 'none';
+            document.getElementById('walletDisplay').textContent = `${currentUser.wallet.toFixed(2)}`;
+        }
+
+        // RENDER FUNCTIONS
+        function renderTrendingBooks() {
+            const container = document.getElementById('trendingBooks');
+            const trending = bookDatabase.slice(0, 4);
+            
+            container.innerHTML = trending.map(book => `
+                <div class="card">
+                    <div class="card-image">${book.icon}</div>
+                    <div class="card-content">
+                        <div class="card-title">${book.title}</div>
+                        <div class="card-subtitle">${book.author}</div>
+                        <span class="card-status status-${book.status}">${book.status === 'available' ? 'Available' : 'Borrowed'}</span>
+                        <div class="card-actions">
+                            ${book.status === 'available' ? 
+                                `<button class="btn btn-primary btn-small" onclick="borrowBook(${book.id})">Borrow</button>` :
+                                `<button class="btn btn-secondary btn-small" onclick="reserveBook(${book.id})">Reserve</button>`
+                            }
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPopularMenu() {
+            const container = document.getElementById('popularMenu');
+            const popular = menuDatabase.slice(0, 4);
+            
+            container.innerHTML = popular.map(item => `
+                <div class="card">
+                    <div class="card-image">${item.icon}</div>
+                    <div class="card-content">
+                        <div class="card-title">${item.name}</div>
+                        <div class="card-subtitle">${item.category}</div>
+                        <div class="card-price">${item.price.toFixed(2)}</div>
+                        <div class="card-actions">
+                            <button class="btn btn-primary btn-small" onclick="addToCart(${item.id})">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderLibraryBooks(category) {
+            const container = document.getElementById('libraryBooks');
+            const filtered = category === 'all' ? bookDatabase : bookDatabase.filter(b => b.category === category);
+            
+            container.innerHTML = filtered.map(book => `
+                <div class="card">
+                    <div class="card-image">${book.icon}</div>
+                    <div class="card-content">
+                        <div class="card-title">${book.title}</div>
+                        <div class="card-subtitle">${book.author}</div>
+                        <div class="card-subtitle" style="margin-top: 0.5rem;">Category: ${book.category}</div>
+                        <span class="card-status status-${book.status}">${book.status === 'available' ? 'Available' : 'Borrowed'}</span>
+                        <div class="card-actions">
+                            ${book.status === 'available' ? 
+                                `<button class="btn btn-primary btn-small" onclick="borrowBook(${book.id})">Borrow</button>` :
+                                `<button class="btn btn-secondary btn-small" onclick="reserveBook(${book.id})">Reserve</button>`
+                            }
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('#library .tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function renderCafeMenu(category) {
+            const container = document.getElementById('cafeMenu');
+            const filtered = category === 'all' ? menuDatabase : menuDatabase.filter(m => m.category === category);
+            
+            container.innerHTML = filtered.map(item => `
+                <div class="card">
+                    <div class="card-image">${item.icon}</div>
+                    <div class="card-content">
+                        <div class="card-title">${item.name}</div>
+                        <div class="card-subtitle">${item.category}</div>
+                        <div class="card-price">${item.price.toFixed(2)}</div>
+                        <div class="card-actions">
+                            <button class="btn btn-primary btn-small" onclick="addToCart(${item.id})">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('#cafe .tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // BOOK OPERATIONS
+        function borrowBook(bookId) {
+            if (!currentUser) {
+                showNotification('Please login to borrow books');
+                openModal('loginModal');
+                return;
+            }
+
+            const book = bookDatabase.find(b => b.id === bookId);
+            if (book && book.status === 'available') {
+                book.status = 'borrowed';
+                const dueDate = new Date();
+                dueDate.setDate(dueDate.getDate() + 14);
+                
+                borrowedBooks.push({
+                    bookId: book.id,
+                    title: book.title,
+                    borrowDate: new Date().toLocaleDateString(),
+                    dueDate: dueDate.toLocaleDateString(),
+                    status: 'active'
+                });
+
+                currentUser.booksBorrowed++;
+                showNotification(`"${book.title}" borrowed successfully! Due date: ${dueDate.toLocaleDateString()}`);
+                saveToStorage();
+                renderTrendingBooks();
+                renderLibraryBooks('all');
+            }
+        }
+
+        function reserveBook(bookId) {
+            if (!currentUser) {
+                showNotification('Please login to reserve books');
+                openModal('loginModal');
+                return;
+            }
+            const book = bookDatabase.find(b => b.id === bookId);
+            showNotification(`"${book.title}" reserved! We'll notify you when it's available.`);
+        }
+
+        // CART OPERATIONS
+        function addToCart(itemId) {
+            const item = menuDatabase.find(m => m.id === itemId);
+            if (item) {
+                const existingItem = cart.find(c => c.id === itemId);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    cart.push({ ...item, quantity: 1 });
+                }
+                updateCartDisplay();
+                showNotification(`${item.name} added to cart!`);
+                saveToStorage();
+            }
+        }
+
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            updateCartDisplay();
+            renderCartModal();
+            saveToStorage();
+        }
+
+        function updateQuantity(itemId, change) {
+            const item = cart.find(c => c.id === itemId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(itemId);
+                } else {
+                    updateCartDisplay();
+                    renderCartModal();
+                    saveToStorage();
+                }
+            }
+        }
+
+        function updateCartDisplay() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        function renderCartModal() {
+            const container = document.getElementById('cartItems');
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 2rem;">Your cart is empty</p>';
+                document.getElementById('cartTotalAmount').textContent = '0.00';
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <div style="font-weight: 600; color: var(--primary);">${item.name}</div>
+                        <div style="color: var(--text-light); font-size: 0.9rem;">${item.price.toFixed(2)} each</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                        <span style="margin: 0 0.5rem; font-weight: 600;">${item.quantity}</span>
+                        <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                        <button class="btn btn-secondary" style="margin-left: 1rem; padding: 0.4rem 0.8rem;" onclick="removeFromCart(${item.id})">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('cartTotalAmount').textContent = total.toFixed(2);
+        }
+
+        function checkout() {
+            if (!currentUser) {
+                showNotification('Please login to checkout');
+                closeModal('cartModal');
+                openModal('loginModal');
+                return;
+            }
+
+            if (cart.length === 0) {
+                showNotification('Your cart is empty!');
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            if (currentUser.wallet < total) {
+                showNotification('Insufficient wallet balance!');
+                return;
+            }
+
+            currentUser.wallet -= total;
+            document.getElementById('walletDisplay').textContent = `${currentUser.wallet.toFixed(2)}`;
+
+            orderHistory.push({
+                items: cart.map(item => `${item.name} x${item.quantity}`).join(', '),
+                date: new Date().toLocaleDateString(),
+                total: total,
+                status: 'Completed'
+            });
+
+            showNotification(`Order placed successfully! Total: ${total.toFixed(2)}`);
+            cart = [];
+            updateCartDisplay();
+            closeModal('cartModal');
+            saveToStorage();
+        }
+
+        // SEAT RESERVATION
+        function generateSeatMap() {
+            const container = document.getElementById('seatMap');
+            container.innerHTML = '';
+            
+            for (let i = 1; i <= 40; i++) {
+                const seat = document.createElement('div');
+                seat.className = 'seat';
+                seat.textContent = i;
+                
+                const random = Math.random();
+                if (reservedSeats.includes(i)) {
+                    seat.classList.add('reserved');
+                } else if (random < 0.75) {
+                    seat.classList.add('available');
+                    seat.onclick = () => toggleSeatReservation(i, seat);
+                } else {
+                    seat.classList.add('occupied');
+                }
+                
+                container.appendChild(seat);
+            }
+        }
+
+        function toggleSeatReservation(seatNumber, seatElement) {
+            if (!currentUser) {
+                showNotification('Please login to reserve seats');
+                openModal('loginModal');
+                return;
+            }
+
+            if (reservedSeats.includes(seatNumber)) {
+                reservedSeats = reservedSeats.filter(s => s !== seatNumber);
+                seatElement.classList.remove('reserved');
+                seatElement.classList.add('available');
+                showNotification(`Seat ${seatNumber} reservation cancelled`);
+            } else {
+                reservedSeats.push(seatNumber);
+                seatElement.classList.remove('available');
+                seatElement.classList.add('reserved');
+                showNotification(`Seat ${seatNumber} reserved successfully!`);
+            }
+            saveToStorage();
+        }
+
+        // PROFILE PAGE
+        function updateProfilePage() {
+            document.getElementById('profileName').textContent = currentUser.name;
+            document.getElementById('profileRole').textContent = currentUser.role;
+            document.getElementById('profileEmail').textContent = currentUser.email;
+            document.getElementById('profileMemberSince').textContent = currentUser.memberSince;
+            document.getElementById('profileWallet').textContent = `${currentUser.wallet.toFixed(2)}`;
+            document.getElementById('profileBooksBorrowed').textContent = borrowedBooks.length;
+            document.getElementById('profileFines').textContent = `${currentUser.fines.toFixed(2)}`;
+
+            const borrowingHistoryContainer = document.getElementById('borrowingHistory');
+            if (borrowedBooks.length === 0) {
+                borrowingHistoryContainer.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-light);">No borrowing history</td></tr>';
+            } else {
+                borrowingHistoryContainer.innerHTML = borrowedBooks.map(b => `
+                    <tr>
+                        <td>${b.title}</td>
+                        <td>${b.borrowDate}</td>
+                        <td>${b.dueDate}</td>
+                        <td><span class="card-status status-available">${b.status === 'active' ? 'Active' : 'Returned'}</span></td>
+                    </tr>
+                `).join('');
+            }
+
+            const orderHistoryContainer = document.getElementById('orderHistory');
+            if (orderHistory.length === 0) {
+                orderHistoryContainer.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-light);">No order history</td></tr>';
+            } else {
+                orderHistoryContainer.innerHTML = orderHistory.map(o => `
+                    <tr>
+                        <td>${o.items}</td>
+                        <td>${o.date}</td>
+                        <td>${o.total.toFixed(2)}</td>
+                        <td><span class="card-status status-available">${o.status}</span></td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // SEARCH
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('searchCategory').value;
+
+            if (!query) {
+                showNotification('Please enter a search term');
+                return;
+            }
+
+            if (category === 'books' || category === 'all') {
+                const results = bookDatabase.filter(b => 
+                    b.title.toLowerCase().includes(query) || 
+                    b.author.toLowerCase().includes(query)
+                );
+                if (results.length > 0) {
+                    showPage('library');
+                    showNotification(`Found ${results.length} book(s)`);
+                }
+            }
+
+            if (category === 'menu' || category === 'all') {
+                const results = menuDatabase.filter(m => 
+                    m.name.toLowerCase().includes(query)
+                );
+                if (results.length > 0) {
+                    showPage('cafe');
+                    showNotification(`Found ${results.length} menu item(s)`);
+                }
+            }
+        }
+
+        // FILTER FUNCTIONS
+        function filterBooks(category) {
+            renderLibraryBooks(category);
+        }
+
+        function filterMenu(category) {
+            renderCafeMenu(category);
+        }
+
+        // STATS UPDATE
+        function updateStats() {
+            document.getElementById('statBooks').textContent = bookDatabase.filter(b => b.status === 'available').length;
+            document.getElementById('statMembers').textContent = '1,234';
+            document.getElementById('statItems').textContent = menuDatabase.length;
+        }
+
+        // MODAL OPERATIONS
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            if (modalId === 'cartModal') {
+                renderCartModal();
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        }
+
+        // NOTIFICATION
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const text = document.getElementById('notificationText');
+            text.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
