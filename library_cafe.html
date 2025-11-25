@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="images/npua.png">
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NPUA Library Café - Smart Campus Hub</title>
-    <link rel="icon" type="image/png" href="Gemini_Generated_Image_cs4x6bcs4x6bcs4x.png">
-    <link rel="apple-touch-icon" href="Gemini_Generated_Image_cs4x6bcs4x6bcs4x.png">
-    <title>NPUA Library Café</title>
     <style>
-
-      
         * {
             margin: 0;
             padding: 0;
@@ -50,13 +47,12 @@
         }
 
         .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.2rem 2rem;
-        }
+    /* Existing styles are fine, but ensure alignment */
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* This is the key for vertical centering */
+    padding: 1.2rem 2rem;
+}
 
         .logo {
             font-size: 1.6rem;
@@ -67,6 +63,12 @@
             gap: 0.5rem;
             cursor: pointer;
         }
+        .logo-image {
+    /* Constrain the height to fit the header. You can adjust this number. */
+    height: 60px; 
+    width: auto; /* Maintain the logo's aspect ratio */
+    display: block; 
+}
 
         .nav-links {
             display: flex;
@@ -306,6 +308,13 @@
             justify-content: center;
             font-size: 4rem;
             color: white;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .card-content {
@@ -650,7 +659,10 @@
     <nav>
         <div class="nav-container">
             <div class="logo" onclick="showPage('home')">
-                 NPUA Library Café
+              <a href="/" class="logo-link" onclick="showPage('home')">
+                 <img src="images/npua.png" alt="NPUA Library Café Logo" class="logo-image">
+                 </a>
+                NPUA Library Café
             </div>
             <ul class="nav-links">
                 <li><a onclick="showPage('home')" class="active">Home</a></li>
@@ -663,7 +675,7 @@
                 <div class="user-info" id="userInfo">
                     <div class="wallet-badge" id="walletDisplay">$0.00</div>
                     <div class="cart-badge" onclick="openModal('cartModal')">
-                        🛒
+                        
                         <span class="cart-count" id="cartCount">0</span>
                     </div>
                     <button class="btn btn-secondary" onclick="logout()">Logout</button>
@@ -718,12 +730,12 @@
             </div>
 
             <div class="section">
-                <h2 class="section-title">📚 Trending Books</h2>
+                <h2 class="section-title"> Trending Books</h2>
                 <div class="cards-grid" id="trendingBooks"></div>
             </div>
 
             <div class="section">
-                <h2 class="section-title">☕ Popular Menu</h2>
+                <h2 class="section-title"> Popular Menu</h2>
                 <div class="cards-grid" id="popularMenu"></div>
             </div>
         </div>
@@ -734,7 +746,7 @@
         <div class="container">
             <div class="section">
                 <h2 class="section-title">
-                    <span>📚 Library Catalog</span>
+                    <span>Library Catalog</span>
                 </h2>
                 
                 <div class="tabs">
@@ -754,7 +766,7 @@
     <div class="page" id="cafe">
         <div class="container">
             <div class="section">
-                <h2 class="section-title">☕ Café Menu</h2>
+                <h2 class="section-title">Café Menu</h2>
                 
                 <div class="tabs">
                     <button class="tab active" onclick="filterMenu('all')">All Items</button>
@@ -772,7 +784,7 @@
     <div class="page" id="reservations">
         <div class="container">
             <div class="section">
-                <h2 class="section-title">💺 Seat Reservation</h2>
+                <h2 class="section-title"> Seat Reservation</h2>
                 <p style="margin-bottom: 2rem; color: var(--text-light);">Select an available seat to reserve (Click to reserve/unreserve)</p>
                 
                 <div style="display: flex; gap: 2rem; margin-bottom: 2rem;">
@@ -910,26 +922,36 @@
 
     <script>
         // DATA STORAGE
-        const bookDatabase = [
-            { id: 1, title: "The Midnight Library", author: "Matt Haig", category: "Fiction", status: "available", icon: "📕" },
-            { id: 2, title: "Atomic Habits", author: "James Clear", category: "Non-Fiction", status: "borrowed", icon: "📘" },
-            { id: 3, title: "Sapiens", author: "Yuval Noah Harari", category: "Non-Fiction", status: "available", icon: "📗" },
-            { id: 4, title: "Clean Code", author: "Robert C. Martin", category: "Technology", status: "available", icon: "📙" },
-            { id: 5, title: "The Pragmatic Programmer", author: "David Thomas", category: "Technology", status: "available", icon: "📕" },
-            { id: 6, title: "Educated", author: "Tara Westover", category: "Non-Fiction", status: "available", icon: "📘" },
-            { id: 7, title: "1984", author: "George Orwell", category: "Fiction", status: "available", icon: "📗" },
-            { id: 8, title: "A Brief History of Time", author: "Stephen Hawking", category: "Science", status: "available", icon: "📙" }
-        ];
 
         const menuDatabase = [
-            { id: 1, name: "Caramel Macchiato", category: "Hot Drinks", price: 4.50, icon: "☕" },
-            { id: 2, name: "Matcha Latte", category: "Cold Drinks", price: 5.00, icon: "🧋" },
-            { id: 3, name: "Croissant", category: "Snacks", price: 3.00, icon: "🥐" },
-            { id: 4, name: "Blueberry Muffin", category: "Snacks", price: 3.50, icon: "🧁" },
-            { id: 5, name: "Espresso", category: "Hot Drinks", price: 3.00, icon: "☕" },
-            { id: 6, name: "Iced Tea", category: "Cold Drinks", price: 4.00, icon: "🧋" },
-            { id: 7, name: "Cappuccino", category: "Hot Drinks", price: 4.00, icon: "☕" },
-            { id: 8, name: "Smoothie Bowl", category: "Snacks", price: 6.50, icon: "🥗" }
+            { id: 1, name: "Cappuccino", category: "Hot Drinks", price: 4.00, icon: "☕", image: "images/cappuccino.jpg" },
+            { id: 2, name: "Latte", category: "Hot Drinks", price: 4.50, icon: "☕", image: "images/latte.jpg" },
+            { id: 3, name: "Flat White", category: "Hot Drinks", price: 4.25, icon: "☕", image: "images/flatwhite.jpg" },
+            { id: 4, name: "Americano", category: "Hot Drinks", price: 3.50, icon: "☕", image: "images/americano.jpg" },
+            { id: 5, name: "Caramel Macchiato", category: "Hot Drinks", price: 5.00, icon: "☕", image: "images/macchiato.jpg" },
+            { id: 6, name: "Espresso", category: "Hot Drinks", price: 3.00, icon: "☕", image: "images/espresso.jpg" },
+            { id: 7, name: "Matcha Latte", category: "Cold Drinks", price: 5.00, icon: "🧋", image: "images/matcha.jpg" },
+            { id: 8, name: "Iced Tea", category: "Cold Drinks", price: 4.00, icon: "🧋", image: "images/icedtea.jpg" },
+            { id: 9, name: "Iced Cappuccino", category: "Cold Drinks", price: 5.00, icon: "🧋", image: "images/icedcap.jpg" },            
+            { id: 10, name: "Iced Latte", category: "Cold Drinks", price: 4.75, icon: "🧋", image: "images/icedlatte.jpg" },
+            { id: 11, name: "Iced Americano", category: "Cold Drinks", price: 3.75, icon: "🧋", image: "images/icedamericano.jpg" },
+            { id: 12, name: "Brownie", category: "Snacks", price: 3.50, icon: "🍫", image: "images/brownie.jpg" },
+            { id: 13, name: "Cheesecake", category: "Snacks", price: 5.50, icon: "🍰", image: "images/cheesecake.jpg" },
+            { id: 14, name: "Croissant", category: "Snacks", price: 3.00, icon: "🥐", image: "images/croissant.jpg" },
+            { id: 15, name: "Blueberry Muffin", category: "Snacks", price: 3.50, icon: "🧁", image: "images/muffin.jpg" },
+            { id: 16, name: "Smoothie Bowl", category: "Snacks", price: 6.50, icon: "🥗", image: "images/smoothiebowl.jpg" },
+            { id: 17, name: "Chocolate Chip Cookie", category: "Snacks", price: 2.50, icon: "🍪", image: "images/cookie.jpg" }
+        ];
+
+        const bookDatabase = [
+            { id: 18, title: "The Midnight Library", author: "Matt Haig", category: "All", status: "available", icon: "📙",  image: "images/books/midnight.jpg" },
+            { id: 19, title: "Atomic Habits", author: "James Clear", category: "Non-Fiction", status: "borrowed", icon: "📘", image: "images/books/james.jpg" },
+            { id: 20, title: "Sapiens", author: "Yuval Noah Harari", category: "Non-Fiction", status: "available", icon: "📗", image: "images/books/harrari.jpg" },
+            { id: 21, title: "Clean Code", author: "Robert C. Martin", category: "Technology", status: "available", icon: "📙", image: "images/books/clean.jpg" },
+            { id: 22, title: "The Pragmatic Programmer", author: "David Thomas", category: "Technology", status: "available", icon: "📕", image: "images/books/pragmatic-programmer.jpg" },
+            { id: 23, title: "Educated", author: "Tara Westover", category: "Non-Fiction", status: "available", icon: "📘", image: "images/books/educated.jpg" },
+            { id: 24, title: "1984", author: "George Orwell", category: "Fiction", status: "available", icon: "📗", image: "images/books/1984.jpg" },
+            { id: 25, title: "A Brief History of Time", author: "Stephen Hawking", category: "Science", status: "available", icon: "📙", image: "images/books/brief-history-time.jpg" }
         ];
 
         let currentUser = null;
@@ -1063,7 +1085,9 @@
             
             container.innerHTML = trending.map(book => `
                 <div class="card">
-                    <div class="card-image">${book.icon}</div>
+                    <div class="card-image">
+                        ${book.image ? `<img src="${book.image}" alt="${book.title}">` : book.icon}
+                    </div>
                     <div class="card-content">
                         <div class="card-title">${book.title}</div>
                         <div class="card-subtitle">${book.author}</div>
@@ -1085,7 +1109,9 @@
             
             container.innerHTML = popular.map(item => `
                 <div class="card">
-                    <div class="card-image">${item.icon}</div>
+                    <div class="card-image">
+                        ${item.image ? `<img src="${item.image}" alt="${item.name}">` : item.icon}
+                    </div>
                     <div class="card-content">
                         <div class="card-title">${item.name}</div>
                         <div class="card-subtitle">${item.category}</div>
@@ -1130,7 +1156,9 @@
             
             container.innerHTML = filtered.map(item => `
                 <div class="card">
-                    <div class="card-image">${item.icon}</div>
+                    <div class="card-image">
+                        ${item.image ? `<img src="${item.image}" alt="${item.name}">` : item.icon}
+                    </div>
                     <div class="card-content">
                         <div class="card-title">${item.name}</div>
                         <div class="card-subtitle">${item.category}</div>
